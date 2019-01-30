@@ -1,113 +1,62 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div class="img1">
+    <div class="gen">
+      <Input class="gen-param" v-model="name" placeholder="请输入对方的称呼"/>
+      <Input class="gen-param" v-model="message" :rows="4" type="textarea" placeholder="请输入祝福语"/>
+      <Button type="primary" @click="gen" long style="width: 30%;">生成</Button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
+  name: "HelloWorld",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      name: "",
+      message: ""
+    };
+  },
+  methods: {
+    gen() {
+      let genParam = new Object();
+      genParam.name = this.name;
+      genParam.message = this.message;
+      let name = this.name;
+      let that = this;
+      this.$http
+        .post(this.HOST + "/cards/gen-single", JSON.stringify(genParam), {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(function(res) {
+          console.log(res);
+          that.$router.push({
+            name: "GenImg",
+            params: {
+              src: "http://hk.clearcode.top/hk1-" + name + ".png"
+            }
+          });
+          console.log(res);
+        });
     }
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
+<style>
+.img1 {
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/bg3.png");
+  background-size: cover;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.gen {
+  height: 30%;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.gen-param {
+  width: 80%;
+  margin: 10px;
 }
 </style>
