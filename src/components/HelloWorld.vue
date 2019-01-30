@@ -20,9 +20,10 @@ export default {
   methods: {
     gen() {
       let genParam = new Object();
-      genParam.name = this.name;
+      let name = this.name + new Date().getTime();
+      console.log(name + "===" + this.message);
+      genParam.name = name;
       genParam.message = this.message;
-      let name = this.name;
       let that = this;
       this.$http
         .post(this.HOST + "/cards/gen-single", JSON.stringify(genParam), {
@@ -54,9 +55,14 @@ export default {
 }
 .gen {
   height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .gen-param {
-  width: 80%;
+  width: 60%;
   margin: 10px;
+  margin-right: 15px;
 }
 </style>
