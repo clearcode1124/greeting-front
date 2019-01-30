@@ -3,7 +3,7 @@
     <div class="gen">
       <Input class="gen-param" v-model="name" placeholder="请输入对方的称呼"/>
       <Input class="gen-param" v-model="message" :rows="4" type="textarea" placeholder="请输入祝福语"/>
-      <Button type="primary" @click="gen" long style="width: 30%;">生成</Button>
+      <Button class="btn-gen" type="primary" @click="gen" long style="width: 30%;">生成</Button>
     </div>
   </div>
 </template>
@@ -46,23 +46,31 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .img1 {
   width: 100%;
   height: 100%;
   background-image: url("../assets/bg3.png");
   background-size: cover;
+  position: relative;
+  overflow: hidden;
 }
 .gen {
-  height: 30%;
+  height: 100%;
+  position: relative;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .gen-param {
-  width: 60%;
+  width: 75%;
   margin: 10px;
-  margin-right: 15px;
+}
+.btn-gen {
+  margin: 15px;
+  font-size: 20px;
 }
 </style>
